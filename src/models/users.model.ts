@@ -1,0 +1,42 @@
+import * as mongoose from 'mongoose';
+
+export const usersShema = new mongoose.Schema({
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, required: true },
+  associated_accounts: [],
+  associated_accounts_allowed: { type: Number },
+  account_type: { type: String, required: true },
+  standard_values: {
+    down_payment: { type: Number },
+    interest_rate: { type: Number },
+    loan_period: { type: Number },
+    vacancy_percent: { type: Number },
+    management_percent: { type: Number },
+    cap_ex_percent: { type: Number },
+  },
+});
+
+interface IStandardValues {
+  down_payment: number;
+  interest_rate: number;
+  loan_period: number;
+  vacancy_percent: number;
+  management_percent: number;
+  cap_ex_percent: number;
+}
+
+export interface Users {
+  _id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  role: string;
+  associated_accounts: [];
+  associated_accounts_allowed: number;
+  account_type: string;
+  standard_values: IStandardValues;
+}
