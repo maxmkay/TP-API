@@ -46,11 +46,11 @@ export class UserService {
 
   async authenticateUser(email: string, password: string): Promise<any> {
     const user = await this.usersShema.findOne({ email });
+    return user && (await bcrypt.compare(password, user.password));
+  }
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      console.log('passwords match');
-    } else {
-      console.log('passwords dont match');
-    }
+  async updateUser(email: string, standard_values: Users['standard_values']) {
+    const user = await this.usersShema.updateOne({ email }, { standard_values })
+    return user;
   }
 }
