@@ -50,7 +50,10 @@ export class UserService {
   }
 
   async updateUser(email: string, standard_values: Users['standard_values']) {
-    const user = await this.usersShema.updateOne({ email }, { standard_values })
+    const user = await this.usersShema.updateOne(
+      { email },
+      { standard_values },
+    );
     return user;
   }
 }
