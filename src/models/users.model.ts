@@ -9,9 +9,15 @@ export const usersShema = new mongoose.Schema({
   associated_accounts: [],
   associated_accounts_allowed: { type: Number },
   account_type: { type: String, required: true },
+  user_details: {
+    number_properties: { type: Number },
+    reason_top_prop: { type: String },
+    how_hear: { type: String },
+  },
   standard_values: {
     down_payment: { type: Number },
     interest_rate: { type: Number },
+    closing_costs: { type: Number },
     loan_period: { type: Number },
     vacancy_percent: { type: Number },
     management_percent: { type: Number },
@@ -26,6 +32,12 @@ interface IStandardValues {
   vacancy_percent: number;
   management_percent: number;
   cap_ex_percent: number;
+  closing_costs: number;
+}
+interface IUserDetails {
+  number_properties: number;
+  reason_top_prop: string;
+  how_hear: string;
 }
 
 export interface Users {
@@ -39,4 +51,5 @@ export interface Users {
   associated_accounts_allowed: number;
   account_type: string;
   standard_values: IStandardValues;
+  user_details: IUserDetails;
 }

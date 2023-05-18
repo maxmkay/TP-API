@@ -15,7 +15,7 @@ export class UserController {
   updateUser(@Body() body) {
     console.log(body);
     const { email, standard_values } = body;
-    return this.userService.updateUser(email, standard_values)
+    return this.userService.updateUser(email, standard_values);
   }
 
   @Post('authenticate')
