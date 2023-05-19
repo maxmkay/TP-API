@@ -46,13 +46,16 @@ export class UserService {
 
   async authenticateUser(email: string, password: string): Promise<any> {
     const user = await this.usersShema.findOne({ email });
-    return user && (await bcrypt.compare(password, user.password));
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return user;
+    }
+    return {error: "Invalid email or password."}
   }
 
-  async updateUser(email: string, standard_values: Users['standard_values']) {
+  async updateUser(email: string, standard_values: Users['standard_values'], role: string) {
     const user = await this.usersShema.updateOne(
       { email },
-      { standard_values },
+      { standard_values, role },
     );
     return user;
   }
