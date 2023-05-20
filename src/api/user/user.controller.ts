@@ -7,13 +7,11 @@ export class UserController {
 
   @Post()
   addUser(@Body() body) {
-    console.log(body);
     return this.userService.addUser(body);
   }
 
   @Patch()
   async updateUser(@Body() body) {
-    console.log(body);
     const { email, standard_values, role } = body;
     return await this.userService.updateUser(email, standard_values, role);
   }
