@@ -5,7 +5,7 @@ export const usersShema = new mongoose.Schema({
   last_name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, required: true },
+  role: { type: String },
   associated_accounts: [],
   associated_accounts_allowed: { type: Number },
   account_type: { type: String, required: true },
