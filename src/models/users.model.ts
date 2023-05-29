@@ -19,6 +19,7 @@ export const usersShema = new mongoose.Schema({
     interest_rate: { type: Number },
     closing_costs: { type: Number },
     loan_period: { type: Number },
+    maintenance_percent: { type: Number },
     vacancy_percent: { type: Number },
     management_percent: { type: Number },
     cap_ex_percent: { type: Number },
@@ -30,12 +31,13 @@ interface IStandardValues {
   interest_rate: number;
   loan_period: number;
   vacancy_percent: number;
+  maintenance_percent: number;
   management_percent: number;
   cap_ex_percent: number;
   closing_costs: number;
 }
 interface IUserDetails {
-  number_properties: number;
+  number_properties: string;
   reason_top_prop: string;
   how_hear: string;
 }

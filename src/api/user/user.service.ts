@@ -21,6 +21,7 @@ export class UserService {
       associated_accounts_allowed,
       account_type,
       standard_values,
+      user_details
     } = newUser;
 
     // Hash the password
@@ -37,6 +38,7 @@ export class UserService {
       associated_accounts_allowed,
       account_type,
       standard_values,
+      user_details
     });
 
     const userResults = await newAccount.save();
