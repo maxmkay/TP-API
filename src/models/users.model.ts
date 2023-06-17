@@ -23,7 +23,6 @@ export const usersShema = new mongoose.Schema({
     vacancy_percent: { type: Number },
     management_percent: { type: Number },
     cap_ex_percent: { type: Number },
-    maintenance_percent: { type: Number },
   },
 });
 
@@ -36,7 +35,6 @@ interface IStandardValues {
   management_percent: number;
   cap_ex_percent: number;
   closing_costs: number;
-  maintenance_percent: number;
 }
 interface IUserDetails {
   number_properties: string;
