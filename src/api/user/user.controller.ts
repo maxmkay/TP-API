@@ -7,20 +7,18 @@ export class UserController {
 
   @Post()
   addUser(@Body() body) {
-    console.log(body);
     return this.userService.addUser(body);
   }
 
   @Patch()
-  updateUser(@Body() body) {
-    console.log(body);
-    const { email, standard_values } = body;
-    return this.userService.updateUser(email, standard_values)
+  async updateUser(@Body() body) {
+    const { email, standard_values, role } = body;
+    return await this.userService.updateUser(email, standard_values, role);
   }
 
   @Post('authenticate')
-  authenticateUser(@Body() body) {
+  async authenticateUser(@Body() body) {
     const { email, password } = body;
-    return this.userService.authenticateUser(email, password);
+    return await this.userService.authenticateUser(email, password);
   }
 }

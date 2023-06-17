@@ -21,6 +21,7 @@ export class UserService {
       associated_accounts_allowed,
       account_type,
       standard_values,
+      user_details
     } = newUser;
 
     // Hash the password
@@ -31,12 +32,13 @@ export class UserService {
       first_name,
       last_name,
       email,
-      password: hashedPassword, // Store hashed password
+      password: hashedPassword,
       role,
       associated_accounts,
       associated_accounts_allowed,
       account_type,
       standard_values,
+      user_details
     });
 
     const userResults = await newAccount.save();
@@ -46,11 +48,21 @@ export class UserService {
 
   async authenticateUser(email: string, password: string): Promise<any> {
     const user = await this.usersShema.findOne({ email });
-    return user && (await bcrypt.compare(password, user.password));
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return user;
+    }
+    return { error: 'Invalid email or password.' };
   }
 
-  async updateUser(email: string, standard_values: Users['standard_values']) {
-    const user = await this.usersShema.updateOne({ email }, { standard_values })
+  async updateUser(
+    email: string,
+    standard_values: Users['standard_values'],
+    role: string,
+  ) {
+    const user = await this.usersShema.updateOne(
+      { email },
+      { standard_values, role },
+    );
     return user;
   }
 }
