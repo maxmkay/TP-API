@@ -8,7 +8,15 @@ export const usersShema = new mongoose.Schema({
   role: { type: String },
   associated_accounts: [],
   associated_accounts_allowed: { type: Number },
-  account_type: { type: String, required: true },
+  account_type: {
+    type: String,
+    required: true,
+  },
+  membership: {
+    type: String,
+    required: true,
+    enum: ['free', 'premium', 'ultra'],
+  },
   user_details: {
     number_properties: { type: Number },
     reason_top_prop: { type: String },
@@ -21,7 +29,6 @@ export const usersShema = new mongoose.Schema({
     loan_period: { type: Number },
     maintenance_percent: { type: Number },
     vacancy_percent: { type: Number },
-    management_percent: { type: Number },
     cap_ex_percent: { type: Number },
   },
 });
@@ -31,7 +38,6 @@ interface IStandardValues {
   interest_rate: number;
   loan_period: number;
   vacancy_percent: number;
-  maintenance_percent: number;
   management_percent: number;
   cap_ex_percent: number;
   closing_costs: number;
