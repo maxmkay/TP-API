@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './api/user/user.module';
 import { AppConfig } from './api/config/config.module';
+import { StripeModule } from './api/stripe/stripe..module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AppConfig } from './api/config/config.module';
     ),
     UserModule,
     AppConfig,
+    StripeModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -15,8 +15,9 @@ export const usersShema = new mongoose.Schema({
   membership: {
     type: String,
     required: true,
-    enum: ['free', 'premium', 'ultra'],
+    enum: ['none', 'free', 'premium', 'ultra'],
   },
+  customer_id: { type: String },
   user_details: {
     number_properties: { type: Number },
     reason_top_prop: { type: String },
@@ -55,9 +56,11 @@ export interface Users {
   email: string;
   password: string;
   role: string;
+  membership: string;
   associated_accounts: [];
   associated_accounts_allowed: number;
   account_type: string;
   standard_values: IStandardValues;
   user_details: IUserDetails;
+  customer_id: string;
 }

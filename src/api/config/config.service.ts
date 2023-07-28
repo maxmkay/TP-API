@@ -13,8 +13,6 @@ export class ConfigService {
       FunctionName: 'getParameter' /* required */,
     };
 
-    console.log('here first');
-
     const getParameter = await new Promise((resolve, reject) => {
       lambda.invoke(params, function (err, data) {
         if (err) reject('Error');
