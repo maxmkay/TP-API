@@ -15,4 +15,9 @@ export class StripeController {
   async webhook(@Body() body) {
     return this.stripeService.webhook(body);
   }
+
+  @Get('complete')
+  async complete () {
+    return `<script>window.close()</script>`
+  }
 }
