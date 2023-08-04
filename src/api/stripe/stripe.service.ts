@@ -69,9 +69,9 @@ export class StripeService {
         mode: 'subscription',
         line_items: [{ price: plan, quantity: 1 }],
         success_url:
-          'ec2-35-172-182-131.compute-1.amazonaws.com:3000/api/stripe/complete',
+          'http://ec2-35-172-182-131.compute-1.amazonaws.com:3000/api/stripe/complete',
         cancel_url:
-          'ec2-35-172-182-131.compute-1.amazonaws.com:3000/api/stripe/complete',
+          'http://ec2-35-172-182-131.compute-1.amazonaws.com:3000/api/stripe/complete',
         customer: customer.customer,
       });
 
