@@ -1,4 +1,4 @@
-import { Body, Query, Controller, Post, Patch, Get } from '@nestjs/common';
+import { Body, Headers, Controller, Post, Patch, Get } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -23,8 +23,8 @@ export class UserController {
   }
 
   @Get('membership')
-  async getMembership(@Query() query) {
-    const { email } = query;
+  async getMembership(@Headers() header) {
+    const { email } = header;
     return await this.userService.getMembership(email);
   }
 }
