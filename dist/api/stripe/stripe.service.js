@@ -48,8 +48,8 @@ let StripeService = class StripeService {
             const session = await stripe.checkout.sessions.create({
                 mode: 'subscription',
                 line_items: [{ price: plan, quantity: 1 }],
-                success_url: 'http://ec2-34-228-195-47.compute-1.amazonaws.com:3000/api/stripe/complete',
-                cancel_url: 'http://ec2-34-228-195-47.compute-1.amazonaws.com:3000/api/stripe/complete',
+                success_url: 'http://ec2-54-175-15-188.compute-1.amazonaws.com:3000/api/stripe/complete',
+                cancel_url: 'http://ec2-54-175-15-188.compute-1.amazonaws.com:3000/api/stripe/complete',
                 customer: customer.customer,
             });
             return { url: session.url };
