@@ -9,6 +9,7 @@ export declare const usersShema: mongoose.Schema<any, mongoose.Model<any, any, a
     }[] | any[];
     account_type: string;
     membership: "none" | "free" | "premium" | "ultra";
+    phone_number?: string;
     role?: string;
     associated_accounts_allowed?: number;
     customer_id?: string;
@@ -36,6 +37,7 @@ export declare const usersShema: mongoose.Schema<any, mongoose.Model<any, any, a
     }[] | any[];
     account_type: string;
     membership: "none" | "free" | "premium" | "ultra";
+    phone_number?: string;
     role?: string;
     associated_accounts_allowed?: number;
     customer_id?: string;
@@ -63,6 +65,7 @@ export declare const usersShema: mongoose.Schema<any, mongoose.Model<any, any, a
     }[] | any[];
     account_type: string;
     membership: "none" | "free" | "premium" | "ultra";
+    phone_number?: string;
     role?: string;
     associated_accounts_allowed?: number;
     customer_id?: string;
@@ -102,6 +105,7 @@ export interface Users {
     first_name: string;
     last_name: string;
     email: string;
+    phone_number: string;
     password: string;
     role: string;
     membership: string;

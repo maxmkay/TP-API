@@ -33,7 +33,7 @@ export declare class UserService {
         _id: string;
     }>>;
     authenticateUser(email: string, password: string): Promise<any>;
-    updateUser(email: string, standard_values: Users['standard_values'], role: string): Promise<import("mongoose").UpdateWriteOpResult>;
+    updateUser(old_email: string, email: string, standard_values: Users['standard_values'], role: string, first_name: string, last_name: string, phone_number: string): Promise<import("mongoose").UpdateWriteOpResult>;
     getMembership(email: any): Promise<{
         membership: string;
         error?: undefined;

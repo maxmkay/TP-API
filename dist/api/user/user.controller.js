@@ -23,8 +23,8 @@ let UserController = class UserController {
         return this.userService.addUser(body);
     }
     async updateUser(body) {
-        const { email, standard_values, role } = body;
-        return await this.userService.updateUser(email, standard_values, role);
+        const { old_email, email, standard_values, role, first_name, last_name, phone_number } = body;
+        return await this.userService.updateUser(old_email, email, standard_values, role, first_name, last_name, phone_number);
     }
     async authenticateUser(body) {
         const { email, password } = body;

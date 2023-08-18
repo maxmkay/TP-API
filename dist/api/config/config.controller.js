@@ -16,16 +16,7 @@ let ConfigController = class ConfigController {
     constructor(configService) {
         this.configService = configService;
     }
-    getConfig() {
-        return this.configService.getConfig();
-    }
 };
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ConfigController.prototype, "getConfig", null);
 ConfigController = __decorate([
     (0, common_1.Controller)('config'),
     __metadata("design:paramtypes", [config_service_1.ConfigService])
