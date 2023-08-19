@@ -52,7 +52,7 @@ export class UserService {
       standard_values,
       user_details,
       membership: 'none',
-      customer_id: customer.id
+      customer_id: customer.id,
     });
 
     const userResults = await newAccount.save();
@@ -67,12 +67,24 @@ export class UserService {
     }
     return { error: 'Invalid email or password.' };
   }
-
   async updateUser(
+    old_email: string,
     email: string,
     standard_values: Users['standard_values'],
     role: string,
+    first_name: string,
+    last_name: string,
+    phone_number: string
   ) {
+
+    if (old_email) {
+      const user = await this.usersShema.updateOne(
+        { email: old_email },
+        { email, phone_number, first_name, last_name },
+      );
+      return user;
+    }
+
     const user = await this.usersShema.updateOne(
       { email },
       { standard_values, role },

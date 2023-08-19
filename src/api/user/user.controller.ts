@@ -12,8 +12,8 @@ export class UserController {
 
   @Patch()
   async updateUser(@Body() body) {
-    const { email, standard_values, role } = body;
-    return await this.userService.updateUser(email, standard_values, role);
+    const { old_email, email, standard_values, role, first_name, last_name, phone_number } = body;
+    return await this.userService.updateUser(old_email, email, standard_values, role, first_name, last_name, phone_number);
   }
 
   @Post('authenticate')
