@@ -119,4 +119,12 @@ export class UserService {
     }
     return { error: 'Invalid customer or plan' };
   }
+
+  async getUser(email) {
+    const user = await this.usersShema.findOne({ email });
+    if (user) {
+      return user;
+    }
+    return { error: 'Invalid email address' };
+  }
 }

@@ -5,9 +5,15 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get()
+  async getUser(@Headers() header) {
+    const { email } = header;
+    return await this.userService.getUser(email)
+  }
+
   @Post()
   async addUser(@Body() body) {
-    return this.userService.addUser(body);
+    return await this.userService.addUser(body);
   }
 
   @Patch()
