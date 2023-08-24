@@ -21,8 +21,8 @@ export class StripeService {
     const stripe = new Stripe(JSON.parse(response.Payload).body);
 
     const productToPlan = {
-      prod_OJqpHLjTpWz2WU: 'free',
-      prod_OKB7x4RFvG9AF7: 'premium',
+      [process.env.PRODUCT_FREE]: 'free',
+      [process.env.PRODUCT_PREMIUM]: 'premium',
     };
 
     const subscription = await stripe.subscriptions.retrieve(
@@ -49,14 +49,11 @@ export class StripeService {
     //@ts-ignore
     const stripe = new Stripe(JSON.parse(response.Payload).body);
 
-    // const customer = await this.userService.getCustomerId(email);
-    // const intent = await stripe.paymentIntents.create({
-    //   amount: 1000,
-    //   currency: 'usd',
-    //   customer: customer.customer,
-    // });
-    // console.log(intent);
-    // return { clientSecret: intent.client_secret };
+    const plans = {
+      free: "free",
+      premium: process.env.MEMBERSHIP_PREMIUM,
+      ultra: process.env.MEMBERSHIP_ULTRA,
+    }
 
     try {
       const customer = await this.userService.getCustomerId(email);
@@ -67,7 +64,7 @@ export class StripeService {
 
       const session = await stripe.checkout.sessions.create({
         mode: 'subscription',
-        line_items: [{ price: plan, quantity: 1 }],
+        line_items: [{ price: plans[plan], quantity: 1 }],
         success_url:
           'http://ec2-54-175-15-188.compute-1.amazonaws.com:3000/api/stripe/complete',
         cancel_url:
