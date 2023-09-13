@@ -6,16 +6,18 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './api/user/user.module';
 import { AppConfig } from './api/config/config.module';
 import { StripeModule } from './api/stripe/stripe..module';
+import { MongodbConfigService } from './mongodb.config.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(
-      `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@topprop.bbyd3va.mongodb.net/TopProp`,
-    ),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: MongodbConfigService,
+    }),
     UserModule,
     AppConfig,
-    StripeModule
+    StripeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

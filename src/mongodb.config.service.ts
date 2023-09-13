@@ -1,9 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import * as AWS from 'aws-sdk';
+import { ConfigService } from '@nestjs/config';
+import {
+  MongooseModuleOptions,
+  MongooseOptionsFactory,
+} from '@nestjs/mongoose';
+import * as AWS from "aws-sdk"
 
 @Injectable()
-export class ConfigService {
-  async getConfig() {
+export class MongodbConfigService implements MongooseOptionsFactory {
+
+  constructor(private readonly configService: ConfigService) {}
+
+  //You can retrun promise as well
+  public async createMongooseOptions(): Promise<MongooseModuleOptions> {
     AWS.config.region = process.env.AWS_REGION; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: process.env.IDENTITY_POOL,
@@ -21,8 +30,10 @@ export class ConfigService {
     });
 
     //@ts-ignore
-    const parameters = JSON.parse(getParameter.Payload).body
+    const paramters = JSON.parse(JSON.parse(getParameter.Payload).body);
 
-    return parameters;
+    return {
+      uri: paramters.database_url,
+    };
   }
 }

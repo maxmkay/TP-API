@@ -30,7 +30,7 @@ export class UserService {
     const response = await this.configService.getConfig();
 
     //@ts-ignore
-    const stripe = new Stripe(JSON.parse(response.Payload).body);
+    const stripe = new Stripe(response.stripe_key);
     const customer = await stripe.customers.create({
       name: first_name,
       email: email,
