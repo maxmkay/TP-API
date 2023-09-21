@@ -18,7 +18,7 @@ export class StripeService {
     const response = await this.configService.getConfig();
 
     //@ts-ignore
-    const stripe = new Stripe(JSON.parse(response.Payload).body);
+    const stripe = new Stripe(response.stripe_key);
 
     const productToPlan = {
       [process.env.PRODUCT_FREE]: 'free',
@@ -47,7 +47,7 @@ export class StripeService {
     const response = await this.configService.getConfig();
 
     //@ts-ignore
-    const stripe = new Stripe(JSON.parse(response.Payload).body);
+    const stripe = new Stripe(response.stripe_key);
 
     const plans = {
       free: "free",
