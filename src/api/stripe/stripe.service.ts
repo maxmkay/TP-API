@@ -5,24 +5,28 @@ import { UserService } from '../user/user.service';
 
 @Injectable()
 export class StripeService {
+  private readonly stripeConfig: { stripeKey: string };
+  private readonly appConfig: any;
+
   constructor(
     private readonly configService: ConfigService,
     private readonly userService: UserService,
-  ) {}
+  ) {
+    this.appConfig = global['config'];
+    this.stripeConfig = { stripeKey: this.appConfig.stripeKey };
+  }
 
   async webhook(body) {
     if (body.type !== 'checkout.session.completed') {
       return '';
     }
 
-    const response = await this.configService.getConfig();
-
     //@ts-ignore
-    const stripe = new Stripe(response.stripe_key);
+    const stripe = new Stripe(stripeConfig.stripeKey);
 
     const productToPlan = {
-      [process.env.PRODUCT_FREE]: 'free',
-      [process.env.PRODUCT_PREMIUM]: 'premium',
+      [this.appConfig.freePlanKey]: 'free',
+      [this.appConfig.premiumPlanKey]: 'premium',
     };
 
     const subscription = await stripe.subscriptions.retrieve(
@@ -37,23 +41,20 @@ export class StripeService {
   }
 
   async getSubscription(plan, email) {
-
     if (plan === 'free') {
       const customer = await this.userService.getCustomerId(email);
       await this.userService.updateSubscription(customer.customer, 'free');
       return { free: true };
     }
 
-    const response = await this.configService.getConfig();
-
     //@ts-ignore
-    const stripe = new Stripe(response.stripe_key);
+    const stripe = new Stripe(stripeConfig.stripeKey);
 
     const plans = {
-      free: "free",
-      premium: process.env.MEMBERSHIP_PREMIUM,
-      ultra: process.env.MEMBERSHIP_ULTRA,
-    }
+      free: 'free',
+      premium: this.appConfig.premiumPlanKey,
+      ultra: '',
+    };
 
     try {
       const customer = await this.userService.getCustomerId(email);
@@ -65,16 +66,13 @@ export class StripeService {
       const session = await stripe.checkout.sessions.create({
         mode: 'subscription',
         line_items: [{ price: plans[plan], quantity: 1 }],
-        success_url:
-          'http://ec2-54-175-15-188.compute-1.amazonaws.com:3000/api/stripe/complete',
-        cancel_url:
-          'http://ec2-54-175-15-188.compute-1.amazonaws.com:3000/api/stripe/complete',
+        success_url: `${this.appConfig.apiUrl}/stripe/complete`,
+        cancel_url: `${this.appConfig.apiUrl}/stripe/complete`,
         customer: customer.customer,
       });
 
       return { url: session.url };
     } catch (err) {
-      console.log(err);
       return { error: 'failed to generate url' };
     }
   }

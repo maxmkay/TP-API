@@ -5,7 +5,7 @@ export const usersShema = new mongoose.Schema({
   last_name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  phone_number: { type: String},
+  phone_number: { type: String },
   role: { type: String },
   associated_accounts: [],
   associated_accounts_allowed: { type: Number },
@@ -32,6 +32,7 @@ export const usersShema = new mongoose.Schema({
     maintenance_percent: { type: Number },
     vacancy_percent: { type: Number },
     cap_ex_percent: { type: Number },
+    filled_out: { type: Boolean },
   },
 });
 
