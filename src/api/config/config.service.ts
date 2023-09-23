@@ -3,14 +3,19 @@ import * as AWS from 'aws-sdk';
 
 @Injectable()
 export class ConfigService {
+  private appConfig;
+
   async getConfig() {
-    AWS.config.region = process.env.AWS_REGION; // Region
+    AWS.config.region = process.env.AWS_REGION;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: process.env.IDENTITY_POOL,
     });
     const lambda = new AWS.Lambda();
     const params = {
-      FunctionName: 'getParameter' /* required */,
+      FunctionName: 'getParameter',
+      Payload: JSON.stringify({
+        env: process.env.ENVIRONMENT,
+      }),
     };
 
     const getParameter = await new Promise((resolve, reject) => {
@@ -21,8 +26,8 @@ export class ConfigService {
     });
 
     //@ts-ignore
-    const parameters = JSON.parse(getParameter.Payload).body
+    const parametersJSON = JSON.parse(getParameter.Payload).body;
 
-    return parameters;
+    return JSON.parse(parametersJSON);
   }
 }

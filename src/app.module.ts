@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -12,7 +12,7 @@ import { MongodbConfigService } from './mongodb.config.service';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [AppConfig],
       useClass: MongodbConfigService,
     }),
     UserModule,
