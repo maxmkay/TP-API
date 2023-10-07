@@ -22,7 +22,7 @@ export class StripeService {
     }
 
     //@ts-ignore
-    const stripe = new Stripe(stripeConfig.stripeKey);
+    const stripe = new Stripe(this.stripeConfig.stripeKey);
 
     const productToPlan = {
       [this.appConfig.freePlanKey]: 'free',
@@ -36,7 +36,7 @@ export class StripeService {
     await this.userService.updateSubscription(
       subscription.customer,
       //@ts-ignore
-      productToPlan[subscription.plan.product],
+      productToPlan[subscription.plan.id],
     );
   }
 
@@ -48,7 +48,7 @@ export class StripeService {
     }
 
     //@ts-ignore
-    const stripe = new Stripe(stripeConfig.stripeKey);
+    const stripe = new Stripe(this.stripeConfig.stripeKey);
 
     const plans = {
       free: 'free',
@@ -66,8 +66,10 @@ export class StripeService {
       const session = await stripe.checkout.sessions.create({
         mode: 'subscription',
         line_items: [{ price: plans[plan], quantity: 1 }],
-        success_url: `${this.appConfig.apiUrl}/stripe/complete`,
-        cancel_url: `${this.appConfig.apiUrl}/stripe/complete`,
+        // success_url: `${this.appConfig.apiUrl}/stripe/complete`,
+        // cancel_url: `${this.appConfig.apiUrl}/stripe/complete`,
+        success_url: `http://localhost:3000/api/stripe/complete`,
+        cancel_url: `http://localhost:3000/api/stripe/complete`,
         customer: customer.customer,
       });
 
