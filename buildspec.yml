@@ -1,15 +1,17 @@
 version: 0.2
 
 phases:
-  pre_build:
+  install:
+    runtime-versions:
+      nodejs: 14
     commands:
-      - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login --no-include-email --region us-east-1)
+      - echo Installing dependencies...
+      - npm install
+
   build:
     commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t your-image-name .
-  post_build:
-    commands:
-      - echo Build completed on `date`
+      - echo Building the app...
+      - npm run build
+
+artifacts:
+  files: 'dist/**/*'
