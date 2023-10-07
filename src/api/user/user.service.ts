@@ -30,7 +30,7 @@ export class UserService {
     const response = await this.configService.getConfig();
 
     //@ts-ignore
-    const stripe = new Stripe(response.stripe_key);
+    const stripe = new Stripe(response.stripeKey);
     const customer = await stripe.customers.create({
       name: first_name,
       email: email,
@@ -74,9 +74,8 @@ export class UserService {
     role: string,
     first_name: string,
     last_name: string,
-    phone_number: string
+    phone_number: string,
   ) {
-
     if (old_email) {
       const user = await this.usersShema.updateOne(
         { email: old_email },
