@@ -1,6 +1,16 @@
 version: 0.2
 
+cache:
+  paths:
+    - '/root/.aws/*'
+
 phases:
+  install:
+    commands:
+      - |
+        if [ ! -f "/root/.aws/cli/cache" ]; then
+          apk --no-cache add aws-cli
+        fi
   pre_build:
     commands:
       - $(aws ecr get-login --no-include-email --region us-east-1)
