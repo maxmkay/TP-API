@@ -1,16 +1,10 @@
 version: 0.2
 
-cache:
-  paths:
-    - '/root/.aws/*'
-
 phases:
   install:
     commands:
-      - |
-        if [ ! -f "/root/.aws/cli/cache" ]; then
-          apk --no-cache add aws-cli
-        fi
+      - if ! command -v aws &> /dev/null; then apk --no-cache add aws-cli; fi
+      - if ! command -v docker &> /dev/null; then apk --no-cache add docker; service docker start; fi
   pre_build:
     commands:
       - echo $(aws ecr get-login-password --region us-east-1) | docker login --username AWS --password-stdin 424132437436.dkr.ecr.us-east-1.amazonaws.com
