@@ -1,17 +1,15 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      nodejs: 12
+  pre_build:
     commands:
-      - echo Installing dependencies...
-      - npm install
-
+      - $(aws ecr get-login --no-include-email --region us-east-1)
   build:
     commands:
-      - echo Building the app...
-      - npm run build
-
+      - docker build -t tp-api .
+      - docker tag tp-api:latest 424132437436.dkr.ecr.us-east-1.amazonaws.com/tp-api:latest
+  post_build:
+    commands:
+      - docker push 424132437436.dkr.ecr.us-east-1.amazonaws.com/tp-api:latest
 artifacts:
-  files: 'dist/**/*'
+  type: CODEPIPELINE
