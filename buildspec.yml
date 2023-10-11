@@ -3,8 +3,8 @@ version: 0.2
 phases:
   install:
     commands:
-      - dnf install -y aws-cli
-      - dnf install -y docker
+      - sudo dnf install aws-cli
+      - sudo dnf install docker
       - service docker start
   pre_build:
     commands:
