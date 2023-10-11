@@ -13,7 +13,7 @@ phases:
         fi
   pre_build:
     commands:
-      - $(aws ecr get-login --no-include-email --region us-east-1)
+      - echo $(aws ecr get-login-password --region us-east-1) | docker login --username AWS --password-stdin 424132437436.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
       - docker build -t tp-api .
