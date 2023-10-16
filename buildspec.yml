@@ -15,6 +15,3 @@ phases:
     commands:
       - echo Pushing Docker image...
       - docker push 424132437436.dkr.ecr.us-east-1.amazonaws.com/tp-api:latest
-  artifacts:
-    files:
-      - '**/*'
