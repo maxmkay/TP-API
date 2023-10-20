@@ -16,5 +16,8 @@ phases:
       - echo Pushing Docker image...
       - docker push 424132437436.dkr.ecr.us-east-1.amazonaws.com/tp-api:latest
 artifacts:
-  files:
-    - Dockerrun.aws.json
+  type: s3
+  location: codepipeline-us-east-1-299439134221
+  path: /tp-build-prod/
+  name: latest.zip
+  packaging: ZIP
