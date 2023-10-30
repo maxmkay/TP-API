@@ -21,3 +21,5 @@ artifacts:
   path: /tp-build-prod/
   name: latest.zip
   packaging: ZIP
+  files:
+    - 'Dockerrun.aws.json'
