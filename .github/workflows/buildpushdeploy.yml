@@ -32,14 +32,22 @@ jobs:
       - name: Push Docker image to ECR
         run: docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:latest
 
-      #- name: Install AWS CLI
-      #  run: |
-      #    apt-get update
-      #    apt-get install awscli -y
+      - name: Install AWS CLI
+        run: |
+          if ! dpkg -l | grep -q "awscli"; then
+            echo "awscli is not installed. Installing..."
+            sudo apt-get update
+            sudo apt-get install -y awscli
+          else
+            echo "awscli is already installed."
+          fi
 
       - name: Refresh the Beanstalk application
         run: |
-          aws elasticbeanstalk update-environment --application-name ${{ vars.APP_NAME }} --environment-name ${{ vars.APP_ENV_NAME }} --description "Trigger redeploy at $(date)"
+          # VERSION_LABEL=$(date)
+          # aws elasticbeanstalk create-application-version --application-name ${{ vars.APP_NAME }} --version-label "$VERSION_LABEL" --source-bundle S3Bucket="codepipeline-us-east-1-299439134221",S3Key="tp-api-prod/SourceArti/gV1dWsN"
+          VERSION_LABEL=latest
+          aws elasticbeanstalk update-environment --application-name ${{ vars.APP_NAME }} --environment-name ${{ vars.APP_ENV_NAME }}  --version-label "$VERSION_LABEL"
 
       - name: While Beanstalk deploys, delete untagged images in ECR
         continue-on-error: true
