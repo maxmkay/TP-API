@@ -1,6 +1,14 @@
-FROM node:18-alpine
+# Base image
+FROM node:18
+
 WORKDIR /usr/src/app
+
 COPY package*.json ./
-RUN yarn install --production
-CMD ["node", "dist/main.js"]
-EXPOSE 3000
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+CMD [ "node", "dist/main.js" ]
