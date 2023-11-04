@@ -3,7 +3,7 @@ on:
   workflow_call:
   push:
     branches:
-      - master
+      - live
 
 jobs:
   buildpushdeploy:
@@ -55,4 +55,3 @@ jobs:
 
       - name: Wait for the environment to finish update
         run: aws elasticbeanstalk wait environment-updated --application-name ${{ vars.APP_NAME }} --environment-name ${{ vars.APP_ENV_NAME }}
-
