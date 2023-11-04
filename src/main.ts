@@ -10,6 +10,9 @@ async function bootstrap() {
   app.enableCors();
   app.setGlobalPrefix('api');
 
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  });
   await app.listen(3000);
 }
 bootstrap();
