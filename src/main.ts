@@ -4,10 +4,11 @@ import { ConfigService } from './api/config/config.service';
 
 async function bootstrap() {
   try {
+    const app = await NestFactory.create(AppModule);
     const configService = new ConfigService();
     const config = await configService.getConfig();
     global['config'] = config;
-    const app = await NestFactory.create(AppModule);
+
     app.enableCors();
     app.setGlobalPrefix('api');
 
