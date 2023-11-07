@@ -12,6 +12,15 @@ async function bootstrap() {
 
   process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    if (reason instanceof Error) {
+      console.error(reason.stack);
+    }
+  });
+
+  process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    console.error(error.stack);
+    process.exit(1);
   });
   await app.listen(3000);
 }
