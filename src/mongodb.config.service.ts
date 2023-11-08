@@ -7,15 +7,12 @@ import { ConfigService } from './api/config/config.service';
 
 @Injectable()
 export class MongodbConfigService implements MongooseOptionsFactory {
-  private readonly appConfig: any;
-
-  constructor(private configService: ConfigService) {
-    this.appConfig = global['config'];
-  }
+  constructor(private configService: ConfigService) {}
 
   public async createMongooseOptions(): Promise<MongooseModuleOptions> {
+    const appConfig = await this.configService.getConfig();
     return {
-      uri: this.appConfig.mongoUrl,
+      uri: appConfig.mongoUrl,
     };
   }
 }
