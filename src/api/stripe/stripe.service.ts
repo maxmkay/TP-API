@@ -5,15 +5,19 @@ import { UserService } from '../user/user.service';
 
 @Injectable()
 export class StripeService {
-  private readonly stripeConfig: { stripeKey: string };
-  private readonly appConfig: any;
+  private stripeConfig: { stripeKey: string };
+  private appConfig: any;
 
   constructor(
     private readonly configService: ConfigService,
     private readonly userService: UserService,
   ) {
-    this.appConfig = global['config'];
-    this.stripeConfig = { stripeKey: this.appConfig.stripeKey };
+    this.getConfig();
+  }
+
+  private async getConfig() {
+    this.appConfig = await this.configService.getConfig();
+    this.stripeConfig = this.appConfig;
   }
 
   async webhook(body) {
@@ -66,10 +70,10 @@ export class StripeService {
       const session = await stripe.checkout.sessions.create({
         mode: 'subscription',
         line_items: [{ price: plans[plan], quantity: 1 }],
-        // success_url: `${this.appConfig.apiUrl}/stripe/complete`,
-        // cancel_url: `${this.appConfig.apiUrl}/stripe/complete`,
-        success_url: `http://localhost:3000/api/stripe/complete`,
-        cancel_url: `http://localhost:3000/api/stripe/complete`,
+        success_url: `${this.appConfig.apiUrl}/stripe/complete`,
+        cancel_url: `${this.appConfig.apiUrl}/stripe/complete`,
+        // success_url: `http://localhost:3000/api/stripe/complete`,
+        // cancel_url: `http://localhost:3000/api/stripe/complete`,
         customer: customer.customer,
       });
 
