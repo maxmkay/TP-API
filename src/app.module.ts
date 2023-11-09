@@ -11,12 +11,12 @@ import { MongodbConfigService } from './mongodb.config.service';
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    AppConfig,
     MongooseModule.forRootAsync({
       imports: [AppConfig],
       useClass: MongodbConfigService,
     }),
     UserModule,
-    AppConfig,
     StripeModule,
   ],
   controllers: [AppController],
