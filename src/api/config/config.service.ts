@@ -3,8 +3,6 @@ import * as AWS from 'aws-sdk';
 
 @Injectable()
 export class ConfigService {
-  private appConfig;
-
   async getConfig() {
     AWS.config.region = process.env.AWS_REGION;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
