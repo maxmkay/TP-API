@@ -6,8 +6,18 @@ import { usersShema } from '../../models/users.model';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'users', schema: usersShema }])],
-  providers: [ConfigService],
+  providers: [
+    ConfigService,
+    {
+      provide: 'ASYNC_CONFIG',
+      useFactory: async (configService: ConfigService) => {
+        await configService.getConfig();
+        return configService.getConfig();
+      },
+      inject: [ConfigService],
+    },
+  ],
   controllers: [ConfigController],
-  exports: [ConfigService],
+  exports: [ConfigService, 'ASYNC_CONFIG'], // Export ConfigService
 })
 export class AppConfig {}
