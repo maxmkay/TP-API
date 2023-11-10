@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   MongooseModuleOptions,
   MongooseOptionsFactory,
@@ -7,17 +7,11 @@ import { ConfigService } from './api/config/config.service';
 
 @Injectable()
 export class MongodbConfigService implements MongooseOptionsFactory {
-  constructor(private configService: ConfigService) {}
+  constructor(@Inject('ASYNC_CONFIG') private appConfig) {}
 
-  public async createMongooseOptions(): Promise<MongooseModuleOptions> {
-    try {
-      const appConfig = await this.configService.getConfig();
-      return {
-        uri: appConfig.mongoUrl,
-      };
-    } catch (e) {
-      console.log('mongodberror', e);
-      return e;
-    }
+  createMongooseOptions(): MongooseModuleOptions {
+    return {
+      uri: this.appConfig.mongoUrl,
+    };
   }
 }
