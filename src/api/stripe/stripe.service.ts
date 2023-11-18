@@ -70,10 +70,8 @@ export class StripeService {
       const session = await stripe.checkout.sessions.create({
         mode: 'subscription',
         line_items: [{ price: plans[plan], quantity: 1 }],
-        success_url: `${this.appConfig.apiUrl}/stripe/complete`,
-        cancel_url: `${this.appConfig.apiUrl}/stripe/complete`,
-        // success_url: `http://localhost:3000/api/stripe/complete`,
-        // cancel_url: `http://localhost:3000/api/stripe/complete`,
+        success_url: `${this.appConfig.apiUrl}/api/stripe/complete`,
+        cancel_url: `${this.appConfig.apiUrl}/api/stripe/complete`,
         customer: customer.customer,
       });
 
